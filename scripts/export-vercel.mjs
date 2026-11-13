@@ -199,6 +199,9 @@ await write(
   '.gitignore',
   'node_modules/\ndist/\n.vercel/\n.env*\n*.tsbuildinfo\n*.log\n.DS_Store\n',
 )
+// Keep deployable fonts as ordinary Git files even when this snapshot is
+// committed underneath the Make repository's global Git LFS rules.
+await write('.gitattributes', 'public/fonts/*.ttf -filter -diff -merge -text\n')
 await write('.nvmrc', '24\n')
 console.log(`Ekspor mandiri dibuat di ${relative}`)
 console.log('Lanjutkan: pnpm --dir ' + JSON.stringify(relative) + ' install')

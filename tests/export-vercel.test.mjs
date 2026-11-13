@@ -30,6 +30,8 @@ test('standalone export contains deployable browser source without platform depe
     const font = await readFile(path.join(destination, 'public/fonts/barlow-condensed-800.ttf'))
     assert.ok(font.length > 10000)
     assert.ok(!font.subarray(0, 80).toString().includes('git-lfs'))
+    const attributes = await readFile(path.join(destination, '.gitattributes'), 'utf8')
+    assert.ok(attributes.includes('public/fonts/*.ttf -filter'))
     const workspace = await readFile(path.join(destination, 'pnpm-workspace.yaml'), 'utf8')
     assert.ok(workspace.includes("'.'"))
     await assert.rejects(readFile(path.join(destination, '.env')))

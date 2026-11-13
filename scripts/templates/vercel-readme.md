@@ -18,10 +18,10 @@ pnpm dev
 
 ## Deploy ke Vercel
 
-1. Push isi proyek ini ke repository GitHub.
+1. Push proyek ini ke repository GitHub. Jika disertakan di dalam proyek Figma Make, pertahankan folder **`web/`**.
 2. Buka Vercel → **Add New → Project**.
 3. Hubungkan akun GitHub dan pilih `VoxXx29/ChatBotZ`.
-4. Root Directory: **`.`** — `package.json` harus berada di root repository.
+4. Root Directory: **`web`** jika file ini berada di `web/README.md`. Gunakan **`.`** hanya jika isi aplikasi mandiri ini memang berada langsung di root repository.
 5. Framework Preset: **Vite**.
 6. Node.js Version: **24.x**.
 7. Install Command: **`pnpm install --frozen-lockfile`**.
@@ -31,9 +31,13 @@ pnpm dev
 
 `vercel.json` sudah menyertakan framework, perintah instalasi/build, direktori output, dan header dasar. Setelah repository terhubung, push ke branch produksi akan memicu deployment baru.
 
+Untuk repository yang masih memiliki proyek Figma di root, jangan ubah `package.json` utama dan jangan menambahkan `FIGMA_EID`. Vercel harus membaca **`web/package.json`**, dengan nama paket **`chatbotz-riff-local`** dan script build **`tsc --noEmit && vite build`**, bukan `payload build`. Pastikan `web/pnpm-lock.yaml`, `web/pnpm-workspace.yaml`, dan `web/.gitattributes` ikut terkirim. Pada pengaturan Root Directory Vercel, tidak perlu menyertakan file di luar folder `web`.
+
 Vercel hanya meng-host frontend. AI tetap memakai GPU pengunjung, bukan server Vercel. Tidak ada file bobot model berukuran besar yang disimpan di repository atau di paket deployment; file model diunduh langsung dari Hugging Face/GitHub setelah pengunjung menekan **Aktifkan AI**.
 
 ## Push ke GitHub dengan aman
+
+Jika folder ini adalah **`web/` di dalam repository Figma Make yang sudah ada**, jangan menjalankan `git init` di dalam `web`. Push/sinkronkan perubahan melalui repository yang sudah ada dan pastikan `web/package.json` muncul di GitHub. Petunjuk `git init` di bawah hanya untuk repository frontend baru yang kosong.
 
 Jika repository tujuan **kosong**, jalankan dari folder yang berisi README ini:
 

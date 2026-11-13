@@ -1,0 +1,1 @@
+public/fonts/*.ttf -filter -diff -merge -text
